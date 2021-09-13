@@ -62,7 +62,11 @@ pipeline {
     } 
 	}*/
          
-
+    stage('Code Quality Review') {
+        steps{
+              sh "echo 'this is code quality stage'"
+              }
+           }
     
     stage('Build Docker Image'){
 	steps{
