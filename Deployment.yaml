@@ -1,0 +1,15 @@
+pipeline:
+  agent:
+    any:
+  stages:
+    - stage: "Checkout"
+      steps:
+	      script:
+		      - withCredentials: "[usernamePassword(credentialsId: 'e43b876c-cb46-4e5c-a094-bf23be3470ce', passwordVariable: 'pwd', usernameVariable: 'user')]"
+            script:        
+		          - git "https://github.com/mudaliar20/PowerTrain.git"
+    - stage: "Deploy to GKE"
+      steps:
+        - "sh 'gcloud auth list'"
+        - "sh 'gcloud container clusters get-credentials dcp-gke --region us-east1 --project ford-project-319713'"
+        - "sh 'kubectl apply -f gke-deployment.yaml'"
