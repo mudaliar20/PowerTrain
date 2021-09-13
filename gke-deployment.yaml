@@ -4,7 +4,7 @@ metadata:
   labels:
     name: springboot
   name: powertrain
-  namespace: powertrain-gke-dev
+  namespace: powertrain-gke-dev-yaml
 spec:
   replicas: 1
   selector:
@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: nexus
-        image: gcr.io/ford-project-319713/powertrain:@IMG_TAG@
+        image: gcr.io/ford-project-319713/powertrain:50
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8080
@@ -29,7 +29,7 @@ metadata:
   labels:
     name: springboot
   name: powertrain-svc
-  namespace: powertrain-gke-dev
+  namespace: powertrain-gke-dev-yaml
 spec:
   type: LoadBalancer
   ports:
