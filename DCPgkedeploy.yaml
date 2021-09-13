@@ -2,7 +2,7 @@ pipeline:
   agent:
     any:
   variables:
-    - name: OUT
+  - name: OUT
     #OUT: test
   stages:
     - stage: "Checkout"
