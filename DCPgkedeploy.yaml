@@ -2,7 +2,8 @@ pipeline:
   agent:
     any:
   variables:
-    OUT: test
+    - name: OUT
+    #OUT: test
   stages:
     - stage: "Checkout"
       steps:
@@ -11,5 +12,5 @@ pipeline:
       steps:
         - "sh 'gcloud auth list'"
         - "sh 'gcloud container clusters get-credentials dcp-gke --region us-east1 --project ford-project-319713'"
-        - "sh 'kubectl get pods -n powertrain-gke-dev | grep powertrain'"
+        - "sh 'OUT=$(kubectl get pods -n powertrain-gke-dev | grep powertrain | awk '{print $1}')'"
         - "sh 'echo $OUT'"
