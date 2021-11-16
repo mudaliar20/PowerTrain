@@ -1,6 +1,7 @@
 def repoName
 def repoURL
 def branchName
+def democheck
 pipeline {
   agent any
   tools {
