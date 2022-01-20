@@ -1,4 +1,5 @@
 # Spring New PetClinic Sample Application [![Build Status](https://travis-ci.org/spring-projects/spring-petclinic.png?branch=master)](https://travis-ci.org/spring-projects/spring-petclinic/)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fmudaliar20%2FPowerTrain.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fmudaliar20%2FPowerTrain?ref=badge_shield)
 Deploy this sample application to Pivotal Web Services:
 <a href="https://push-to.cfapps.io?repo=https%3A%2F%2Fgithub.com%2Fspring-projects%2Fspring-petclinic.git">
     <img src="https://push-to.cfapps.io/ui/assets/images/Push-to-Pivotal-Dark.svg" width="130" alt="Push" align="top">
@@ -137,3 +138,6 @@ The Spring PetClinic sample application is released under version 2.0 of the [Ap
 [spring-petclinic-graphql]: https://github.com/spring-petclinic/spring-petclinic-graphql
 [spring-petclinic-kotlin]: https://github.com/spring-petclinic/spring-petclinic-kotlin
 [spring-petclinic-rest]: https://github.com/spring-petclinic/spring-petclinic-rest
+
+
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fmudaliar20%2FPowerTrain.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fmudaliar20%2FPowerTrain?ref=badge_large)
