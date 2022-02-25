@@ -4,7 +4,7 @@ def branchName
 pipeline {
   agent any
   tools {
-  nodejs "NODE"
+  //nodejs "NODE"
   maven "maven3.6.3"
   }
   environment {
@@ -35,7 +35,7 @@ pipeline {
      // def mavenHome =  tool name: "maven3.6.3", type: "maven"
      // def mavenCMD = "${mavenHome}/bin/mvn"
       sh "mvn clean package -DskipTests"
-      sh 'npm install'
+    //  sh 'npm install'
       
     } 
 	}
