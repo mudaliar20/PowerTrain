@@ -10,7 +10,7 @@ pipeline {
         }
         steps{
             script {
-            def buildNumber = Jenkins.instance.getItem('Powertrain').lastSuccessfulBuild.number
+            def buildNumber = Jenkins.instance.getItem('CheckoutBuildJob').lastSuccessfulBuild.number
             print buildNumber
             sh '''#!/bin/bash -l
             gcloud auth list
