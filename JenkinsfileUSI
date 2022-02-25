@@ -24,7 +24,7 @@ pipeline {
       echo "env.GIT_COMMIT"
       echo "${env.GIT_COMMIT}"
     }
-       checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'GithubCredentails', url: 'https://github.com/mudaliar20/CanApplication.git']]])
+       checkout([$class: 'GitSCM', branches: [[name: '*/develop']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'Github_Mudaliar20', url: 'https://github.com/mudaliar20/PowerTrain.git']]])
         
                 
     }
