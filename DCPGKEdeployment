@@ -14,6 +14,7 @@ pipeline {
             print buildNumber
             sh '''#!/bin/bash -l
             whoami
+            sudo su - dhemanth
             gcloud auth list  
             gcloud config set account dhemanth@dca-gcp.deloitte.com
             gcloud container clusters get-credentials dcp-gke --region us-east1 --project ford-project-319713
