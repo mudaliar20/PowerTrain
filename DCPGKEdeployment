@@ -13,6 +13,7 @@ pipeline {
             def buildNumber = Jenkins.instance.getItem('PetclinicDeployment').lastSuccessfulBuild.number
             print buildNumber
             sh '''#!/bin/bash -l
+            whoami
             gcloud auth list  
             gcloud config set account dhemanth@dca-gcp.deloitte.com
             gcloud container clusters get-credentials dcp-gke --region us-east1 --project ford-project-319713
