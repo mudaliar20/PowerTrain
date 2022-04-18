@@ -73,8 +73,7 @@ stage('Build docker images') {
         sh 'FOSSA_API_KEY=6e49adf983a576f481260d0a8d2d3652 fossa analyze'
     }
     }
-  }
-  }
+
 	
      stage('Test') {
 	 steps{
