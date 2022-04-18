@@ -40,7 +40,31 @@ pipeline {
     } 
 	}
         
+stage('Build docker images') {
+                  environment {
+                  nexus_docker_repo = '35.211.157.43:8082'
+                  dcp_demo_app_tag = 'petclinic-green'
+				  }
+                     
+            
+            steps {               
+              withCredentials([usernamePassword(credentialsId: 'NexusID', usernameVariable: 'nexus_docker_repo_user', passwordVariable: 'nexus_docker_repo_password')]){
 
+               sh '''#!/bin/bash -l
+
+                 echo "Publish Docker Image to Nexus"
+                
+                 docker login -u ${nexus_docker_repo_user} -p ${nexus_docker_repo_password} ${nexus_docker_repo}
+
+                 docker build -t ${nexus_docker_repo}/${dcp_demo_app_tag}:${BUILD_NUMBER} -f Dockerfile .
+
+                 docker push ${nexus_docker_repo}/${dcp_demo_app_tag}:${BUILD_NUMBER}
+                
+                 '''
+              }                
+                
+            }
+        }
      
   
 	
