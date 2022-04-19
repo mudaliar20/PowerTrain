@@ -7,6 +7,7 @@ pipeline {
   //nodejs "NODE"
   maven "maven3.6.3"
   }
+  options { skipDefaultCheckout() }
   environment {
         buildnumber = "${BUILD_NUMBER}"
         jobName    = "${env.JOB_NAME}"
