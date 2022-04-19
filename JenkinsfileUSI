@@ -30,7 +30,7 @@ pipeline {
     }
 	}
     
-    stage(" Maven Clean Package"){
+    stage(" Build Management using Maven"){
 	steps{
      // def mavenHome =  tool name: "maven3.6.3", type: "maven"
      // def mavenCMD = "${mavenHome}/bin/mvn"
@@ -70,13 +70,14 @@ stage('Build docker images') {
   stage('Fossa Analyze') {
   steps{
        sh 'cd ${WORKSPACE}'
+       sh ' 
         sh 'FOSSA_API_KEY=72c7481f1a4038944db893d42ae792c2 fossa analyze'
 
     }
     }
 
 	
-     stage('Test') {
+     stage('Capture Environment variables') {
 	 steps{
 	 script{
 	 repoName = determineRepoName()
