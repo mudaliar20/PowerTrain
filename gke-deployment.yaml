@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: nexus
-        image: arey/springboot-petclinic
+        image: mudaliar20/petclinic:2.1
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8080
