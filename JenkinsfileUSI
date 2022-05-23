@@ -7,7 +7,7 @@ pipeline {
   //nodejs "NODE"
   maven "maven3.6.3"
   }
-  options { skipDefaultCheckout() }
+  //options { skipDefaultCheckout() }
   environment {
         buildnumber = "${BUILD_NUMBER}"
         jobName    = "${env.JOB_NAME}"
@@ -16,7 +16,7 @@ pipeline {
     }
   stages{
      
-    stage('SCM Checkout'){
+  /*  stage('SCM Checkout'){
 	steps {
         script {
       def scmVars = checkout([
@@ -29,7 +29,7 @@ pipeline {
         
                 
     }
-	}
+	} */
     
     stage(" Build Management using Maven"){
 	steps{
