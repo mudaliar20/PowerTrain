@@ -16,20 +16,20 @@ pipeline {
     }
   stages{
      
-  /*  stage('SCM Checkout'){
-	steps {
-        script {
-      def scmVars = checkout([
-        $class: 'GitSCM'
-      ])
-      echo "env.GIT_COMMIT"
-      echo "${env.GIT_COMMIT}"
-    }
-       checkout([$class: 'GitSCM', branches: [[name: '*/develop']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'Github_HDFC_Demo', url: 'https://github.com/mudaliar20/PowerTrain.git']]])
+  //  stage('SCM Checkout'){
+//	steps {
+  //      script {
+    //  def scmVars = checkout([
+   //     $class: 'GitSCM'
+  //    ])
+   //   echo "env.GIT_COMMIT"
+    //  echo "${env.GIT_COMMIT}"
+  //  }
+  //     checkout([$class: 'GitSCM', branches: [[name: '*/develop']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'Github_HDFC_Demo', url: 'https://github.com/mudaliar20/PowerTrain.git']]])
         
                 
-    }
-	} */
+  //  }
+//	} 
     
     stage(" Build Management using Maven"){
 	steps{
