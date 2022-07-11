@@ -41,6 +41,17 @@ pipeline {
     } 
 	}
         
+    stage('Sonarqube') {
+        environment {
+        scannerHome = tool 'SonarQubeScanner'
+}
+        steps {
+        withSonarQubeEnv('sonarqube') {
+        sh "${scannerHome}/bin/sonar-scanner"
+    }
+    }
+}
+        
 stage('Build docker images') {
                   environment {
                   nexus_docker_repo = '35.211.157.43:8082'
