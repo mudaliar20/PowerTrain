@@ -48,7 +48,7 @@ pipeline {
 }
         steps {
         withSonarQubeEnv('sonarqube') {
-        sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=petclinic -Dsonar.sources=${workspace}/PetclinicDeployment/target" 
+        sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=petclinic -Dsonar.sources=${workspace}/target" 
     }
     }
 }
