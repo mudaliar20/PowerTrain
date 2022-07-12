@@ -2,7 +2,7 @@ def repoName
 def repoURL
 def branchName
 pipeline {
-  agent any
+  agent { label 'worker1' }
   tools {
   //nodejs "NODE"
   maven "maven3.6.3"
