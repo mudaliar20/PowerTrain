@@ -89,7 +89,7 @@ stage('Build docker images') {
     stage('Vulnerability Scanner') {
     steps {
      script {
-           def imageLine = 'openjdk:8-jre-alpine'
+           def imageLine = '${nexus_docker_repo}/${dcp_demo_app_tag}:${BUILD_NUMBER}'
            writeFile file: 'anchore_images', text: imageLine
            anchore name: 'anchore_images'
           }
