@@ -86,15 +86,15 @@ stage('Build docker images') {
     stage('Vulnerability Scanner') {
     steps {
     script{
-       try {
+      // try { 
            //sh 'anchore-cli registry add 35.211.157.43:8082 admin welcome@123'
            def imageLine = "${nexus_docker_repo}/${dcp_demo_app_tag}:${BUILD_NUMBER}"
            writeFile file: 'anchore_images', text: imageLine
            anchore name: 'anchore_images'
-           }
-       catch (Exception e) {
-      echo 'Exception occurred: ' + e.toString() 
-          }
+          // }
+     //  catch (Exception e) {
+     // echo 'Exception occurred: ' + e.toString() 
+          //}
           }
        }
     }
