@@ -1,0 +1,41 @@
+
+def repoName
+def repoURL
+def branchName
+pipeline {
+  agent any
+  environment {
+        buildnumber = "${BUILD_NUMBER}"
+        jobName    = "${env.JOB_NAME}"
+        
+        
+    }
+  stages{
+     
+
+        
+    stage('Sonarqube') {
+
+        steps {
+		sh '''
+		echo MANAGERCONTACT = Bharath >> vpc1.tfvars
+        echo ENDDATE = 1/2/2022 >> vpc1.tfvars
+		stash includes: 'vpc1.tfvars', name: 'app'
+		'''
+		
+
+    }
+}
+    
+    stage(" Maven Clean Package"){
+	steps{
+
+      sh 'echo Hello'
+    } 
+	}
+
+}
+  
+
+}
+
