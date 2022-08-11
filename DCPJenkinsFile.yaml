@@ -1,0 +1,23 @@
+pipeline:
+  agent:
+    any:
+  tools:
+    nodejs: "NODE"
+    maven: "maven3.6.3"
+  stages:
+    - stage: "Checkout"
+      steps:
+        - git "https://github.com/mudaliar20/PowerTrain.git"
+    - stage: "Sonar Scan"  
+      steps:
+        - sh 'mvn sonar:sonar'    
+    - stage: "Maven Build"  
+      steps:
+        - sh 'mvn clean package -DskipTests'
+    - stage: "GCP Image Build" 
+      steps:
+        - sh 'docker build -t gcr.io/ford-project-319713/powertrain:${BUILD_NUMBER} . >&1 | tee SomeFile.txt '
+    - stage: "Push Image to Registry"
+      steps:
+        - sh 'gcloud auth configure-docker'
+        - sh 'docker push gcr.io/ford-project-319713/powertrain:${BUILD_NUMBER} >&1 | tee docker.txt'
