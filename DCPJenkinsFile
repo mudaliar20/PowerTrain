@@ -22,13 +22,16 @@ pipeline {
     stage('SCM Checkout'){
 	steps {
         script {
-      def scmVars = checkout([
+     /* def scmVars = checkout([
         $class: 'GitSCM'
-      ])
+      ])*/
+      def scmVars =  checkout([$class: 'GitSCM', branches: [[name: '*/main']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'e43b876c-cb46-4e5c-a094-bf23be3470ce', url: 'https://github.com/mudaliar20/PowerTrain.git']]])
       echo "env.GIT_COMMIT"
       echo "${env.GIT_COMMIT}"
     }
+
        //checkout([$class: 'GitSCM', branches: [[name: '*/main']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '5e42baea-ec87-4c12-ba81-2d5bab8d664f', url: 'https://github.com/mudaliar20/PowerTrain.git']]])
+
         
                 
     }
@@ -102,6 +105,7 @@ pipeline {
 	 repoName = determineRepoName()
          branchName = getGitBranchName() 
          repoURL = determineRepoURL()
+
          //valuesYaml = loadValuesYaml()
 	 }
          sh ' rm -rf *.properties'
@@ -110,7 +114,12 @@ pipeline {
          echo "TwislockImageID=${IMAGEID}" >> variable.properties
          IMAGENAME="$(grep "Successfully tagged" SomeFile.txt | cut -d' ' -f 3)"
          echo "TwislockImageName=http://${IMAGENAME}" >> variable.properties
+
+         '''*/
+        sh "echo apiVersion=${valuesYaml.apiVersion} >> variable.properties"
+                sh "echo label=${valuesYaml.metadata.labels.name} >> variable.properties"	     
          '''*/	     
+
          sh "echo jobName=${env.JOB_NAME} >> variable.properties"
 sh "echo buildNumber=${env.BUILD_NUMBER} >> variable.properties"
 sh "echo repoName=$repoName >> variable.properties"
