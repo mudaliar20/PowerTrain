@@ -20,17 +20,19 @@ pipeline {
 		sh '''
 		echo MANAGERCONTACT = Bharath >> vpc1.tfvars
         echo ENDDATE = 1/2/2022 >> vpc1.tfvars
-		stash includes: 'vpc1.tfvars', name: 'app'
-		'''
 		
+		'''
+		stash includes: 'vpc1.tfvars', name: 'app'
 
     }
 }
     
     stage(" Maven Clean Package"){
 	steps{
+        unstash 'app'
+       
 
-      sh 'echo Hello'
+      sh 'cat vpc1.tfvars'
     } 
 	}
 
