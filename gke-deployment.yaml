@@ -4,7 +4,7 @@ metadata:
   labels:
     name: springboot
   name: powertrain
-  namespace: powertrain-gke-dev
+  namespace: powertrain-gke-prod
 spec:
   replicas: 1
   selector:
@@ -20,7 +20,7 @@ spec:
         image: mudaliar20/petclinic:2.1
         imagePullPolicy: IfNotPresent
         ports:
-        - containerPort: 8080
+        - containerPort: 80
 
 ---
 apiVersion: v1
@@ -29,11 +29,11 @@ metadata:
   labels:
     name: springboot
   name: powertrain-svc
-  namespace: powertrain-gke-dev
+  namespace: powertrain-gke-prod
 spec:
   type: LoadBalancer
   ports:
-    - port: 8080
-      targetPort: 8080
+    - port: 80
+      targetPort: 80
   selector:
     name: springboot

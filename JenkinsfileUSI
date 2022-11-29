@@ -2,37 +2,35 @@ def repoName
 def repoURL
 def branchName
 pipeline {
-  agent { label 'worker1' }
+  agent any
   tools {
   //nodejs "NODE"
   maven "maven3.6.3"
   }
-  //options { skipDefaultCheckout() }
   environment {
         buildnumber = "${BUILD_NUMBER}"
         jobName    = "${env.JOB_NAME}"
-         nexus_docker_repo = '35.211.157.43:8082'
-         dcp_demo_app_tag = 'petclinic'
+        
         
     }
   stages{
      
-  //  stage('SCM Checkout'){
-//	steps {
-  //      script {
-    //  def scmVars = checkout([
-   //     $class: 'GitSCM'
-  //    ])
-   //   echo "env.GIT_COMMIT"
-    //  echo "${env.GIT_COMMIT}"
-  //  }
-  //     checkout([$class: 'GitSCM', branches: [[name: '*/develop']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'Github_HDFC_Demo', url: 'https://github.com/mudaliar20/PowerTrain.git']]])
+    stage('SCM Checkout'){
+	steps {
+        script {
+      def scmVars = checkout([
+        $class: 'GitSCM'
+      ])
+      echo "env.GIT_COMMIT"
+      echo "${env.GIT_COMMIT}"
+    }
+       checkout([$class: 'GitSCM', branches: [[name: '*/develop']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'Github_Mudaliar20', url: 'https://github.com/mudaliar20/PowerTrain.git']]])
         
                 
-  //  }
-//	} 
+    }
+	}
     
-    stage(" Build Management using Maven"){
+    stage(" Maven Clean Package"){
 	steps{
      // def mavenHome =  tool name: "maven3.6.3", type: "maven"
      // def mavenCMD = "${mavenHome}/bin/mvn"
@@ -42,19 +40,12 @@ pipeline {
     } 
 	}
         
-    stage('Sonarqube') {
-        environment {
-        scannerHome = tool 'SonarQubeScanner'
-}
-        steps {
-        withSonarQubeEnv('sonarqube') {
-        sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=petclinic -Dsonar.sources=${workspace}/target" 
-    }
-    }
-}
-        
 stage('Build docker images') {
-                  
+                  environment {
+                  nexus_docker_repo = '35.211.157.43:8082'
+                  dcp_demo_app_tag = 'petclinic-green'
+				  }
+                     
             
             steps {               
               withCredentials([usernamePassword(credentialsId: 'NexusID', usernameVariable: 'nexus_docker_repo_user', passwordVariable: 'nexus_docker_repo_password')]){
@@ -74,33 +65,10 @@ stage('Build docker images') {
                 
             }
         }
-    
      
-/*  stage('Fossa Analyze') {
-  steps{
-       sh 'cd ${WORKSPACE}'
-        sh 'FOSSA_API_KEY=72c7481f1a4038944db893d42ae792c2 fossa analyze'
-
-    }
-    }*/
-    stage('Vulnerability Scanner') {
-    steps {
-    script{
-       try { 
-           //sh 'anchore-cli registry add 35.211.157.43:8082 admin welcome@123'
-           def imageLine = "${nexus_docker_repo}/${dcp_demo_app_tag}:${BUILD_NUMBER}"
-           writeFile file: 'anchore_images', text: imageLine
-           anchore name: 'anchore_images'
-           }
-        catch (Exception e) {
-        echo 'Exception occurred: ' + e.toString() 
-            }
-          }
-       }
-    }
-
+  
 	
-     stage('Capture Environment variables') {
+     stage('Test') {
 	 steps{
 	 script{
 	 repoName = determineRepoName()
@@ -141,4 +109,3 @@ String determineRepoURL() {
 String getGitBranchName() {
     return scm.branches[0].name.tokenize("*")[0].split("\\/")[1]
 }
-
