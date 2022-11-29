@@ -18,7 +18,7 @@ pipeline {
             echo "Hemanth"
             whoami
             gcloud auth list  
-            gcloud config set account dhemanth@dca-gcp.deloitte.com
+            gcloud config set account bharata@dca-gcp.deloitte.com
             gcloud container clusters get-credentials dcp-gke --region us-east1 --project ford-project-319713
             OUT=$(kubectl get pods -n powertrain-gke-prod | grep powertrain | awk '{print $1}')
             echo $OUT
