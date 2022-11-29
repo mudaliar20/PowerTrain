@@ -16,7 +16,7 @@ pipeline {
             whoami
             sudo su - bharata
             gcloud auth list  
-            gcloud config set jenkins-sa-2@ford-project-319713.iam.gserviceaccount.com
+            gcloud config set account bharata@dca-gcp.deloitte.com
             gcloud container clusters get-credentials dcp-gke --region us-east1 --project ford-project-319713
             OUT=$(kubectl get pods -n powertrain-gke-prod | grep powertrain | awk '{print $1}')
             echo $OUT
