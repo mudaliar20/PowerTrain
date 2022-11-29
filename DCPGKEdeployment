@@ -14,11 +14,9 @@ pipeline {
             print buildNumber
             sh '''#!/bin/bash -l
             whoami
-            sudo su - dhemanth
-            echo "Hemanth"
-            whoami
+           sudo su - bharata
             gcloud auth list  
-            gcloud config set account dhemanth@dca-gcp.deloitte.com
+            gcloud config set account bharata@dca-gcp.deloitte.com
             gcloud container clusters get-credentials cluster-1 --zone us-east1-b --project ford-project-319713
             
             OUT=$(kubectl get pods -n powertrain-gke-dev | grep powertrain | awk '{print $1}')
