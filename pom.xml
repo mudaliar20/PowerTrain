@@ -33,8 +33,8 @@
 		<spring.version>5.1.2.RELEASE</spring.version>
 		<junit.version>4.11</junit.version>
 		<log4j.version>1.2.17</log4j.version>
-		<sonar.host.url>http://35.211.119.134:9000/</sonar.host.url>
-		<sonar.login>39ef8491870d38a63cca1dce772383e8d5cd6f56</sonar.login>
+		<sonar.host.url>https://sonarqube-dcp.deloitte.dcpgreendot.com/</sonar.host.url>
+		<sonar.login>f7239d14b9d809e9600e97e89474684033717859</sonar.login>
 		<!-- <sonar.password>admin</sonar.password> -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
