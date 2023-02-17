@@ -1,0 +1,27 @@
+replicaCount: 1
+
+namespace: angular-seed-project
+createNamespace: false
+
+hostname: angular-seed.eks-dev.microspeed.s6ef5y.com
+
+docker:
+  repository: docker.eks.microspeed.s6ef5y.com/repository/docker-internal
+  username: developer 
+  password: Developer@12345
+  container:
+    image: angular-seed
+    tag: latest
+    port: 8080
+    pullPolicy: Always
+  imagePullSecret:
+    name: image-pull-secret
+    create: true
+
+angularEnvironmentVariables: 
+  issuer: https://keycloak.eks-dev.microspeed.s6ef5y.com/auth/realms/user-management
+  client_id: user-management
+  token_endpoint: https://keycloak.eks-dev.microspeed.s6ef5y.com/auth/realms/user-management/protocol/openid-connect/token
+  scope: offline_access
+  dummy_client_secret: iJw3EsxjvJV3MQ2UnG1Q604yPDISX4gZ
+  baseUri: https://cm-location-data-service.eks-dev.microspeed.s6ef5y.com/api
