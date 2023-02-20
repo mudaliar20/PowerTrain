@@ -11,7 +11,7 @@ docker:
   password: Developer@12345
   container:
     image: angular-seed
-    tag: 40
+    tag: 41
     port: 8080
     pullPolicy: Always
   imagePullSecret:
