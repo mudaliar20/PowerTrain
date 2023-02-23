@@ -21,16 +21,15 @@ pipeline {
     withCredentials([usernamePassword(credentialsId: 'gitlab_developer', passwordVariable: 'repopass', usernameVariable: 'repouser')]) {
  
 	 script{
-         def branchName = getGitBranchName() 
+         env.branchName = getGitBranchName() 
 	 }
 sh'''
-echo branchName
-echo ${branchName}
+
 rm -rf swf-ms-angular-seed-deploy
 			git clone -b main https://${repouser}:${repopass}@gitlab.microspeed.s6ef5y.com/swf-ms-seed/swf-ms-angular-seed-deploy.git
 			cd swf-ms-angular-seed-deploy
 			ls
-	sed -i "s,tag: .*,tag: '''+ buildnumber +'''-$branchName,g" values.yaml
+	sed -i "s,tag: .*,tag: '''+ buildnumber +'''-"${env.branchName}",g" values.yaml
 	git config --global user.email "microspeed@example.com"
    git commit -am "Updated Image version tag"
    git push https://${repouser}:${repopass}@gitlab.microspeed.s6ef5y.com/swf-ms-seed/swf-ms-angular-seed-deploy.git
