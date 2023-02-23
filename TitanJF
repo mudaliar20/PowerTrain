@@ -10,36 +10,34 @@ pipeline {
         stages{
             
            
-        stage('Update Image Tag to Deployment file') {
-             agent {
-                docker {
-					 image "${GLOBAL_NEXUS_SERVER_URL}/${GLOBAL_NEXUS_REPO_NAME}/redhat/ubi9/git:latest"
-                     args '-u root:root'
-                 }
+       stage('Update Image Tag to Deployment file') {
+     agent {
+       docker {
+		          image "${GLOBAL_NEXUS_SERVER_URL}/${GLOBAL_NEXUS_REPO_NAME}/redhat/ubi9/git:latest"
+              args '-u root:root'
+              }
             }
-  steps {
-    withCredentials([usernamePassword(credentialsId: 'gitlab_developer', passwordVariable: 'repopass', usernameVariable: 'repouser')]) {
- 
-	 script{
-branchName = getGitBranchName() 
-CODE_VERSION="${BUILD_NUMBER}-$branchName"
-	 }
-sh"""
-
-rm -rf swf-ms-angular-seed-deploy
-			git clone -b main https://${repouser}:${repopass}@gitlab.microspeed.s6ef5y.com/swf-ms-seed/swf-ms-angular-seed-deploy.git
-			cd swf-ms-angular-seed-deploy
-			ls
-	sed -i "s,tag: .*,tag: ${CODE_VERSION},g" values.yaml
-	git config --global user.email "microspeed@example.com"
-   git commit -am "Updated Image version tag"
-   git push https://${repouser}:${repopass}@gitlab.microspeed.s6ef5y.com/swf-ms-seed/swf-ms-angular-seed-deploy.git
-			"""
-
-
-  }}
+     steps {
+       withCredentials([usernamePassword(credentialsId: 'gitlab_developer', passwordVariable: 'repopass', usernameVariable: 'repouser')]) {
+       script{
+          branchName = getGitBranchName() 
+          TAG_VERSION="${BUILD_NUMBER}-$branchName"
+	          }
+       sh"""
+          rm -rf swf-ms-angular-seed-deploy
+		      git clone -b main https://${repouser}:${repopass}@gitlab.microspeed.s6ef5y.com/swf-ms-seed/swf-ms-angular-seed-deploy.git
+		      cd swf-ms-angular-seed-deploy
+	        sed -i "s,tag: .*,tag: ${TAG_VERSION},g" values.yaml
+	        git config --global user.email "microspeed@example.com"
+          git commit -am "Updated Image version tag"
+          git push https://${repouser}:${repopass}@gitlab.microspeed.s6ef5y.com/swf-ms-seed/swf-ms-angular-seed-deploy.git
+	      """
+             }
+	       }
         }
-}
+
+     }
+
 
 }
 
