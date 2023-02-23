@@ -22,18 +22,19 @@ pipeline {
  
 	 script{
 branchName = getGitBranchName() 
+CODE_VERSION="${BUILD_NUMBER}-$branchName"
 	 }
-sh'''
+sh"""
 
 rm -rf swf-ms-angular-seed-deploy
 			git clone -b main https://${repouser}:${repopass}@gitlab.microspeed.s6ef5y.com/swf-ms-seed/swf-ms-angular-seed-deploy.git
 			cd swf-ms-angular-seed-deploy
 			ls
-	sed -i "s,tag: .*,tag: ${BUILD_NUMBER}-$branchName,g" values.yaml
+	sed -i "s,tag: .*,tag: ${CODE_VERSION},g" values.yaml
 	git config --global user.email "microspeed@example.com"
    git commit -am "Updated Image version tag"
    git push https://${repouser}:${repopass}@gitlab.microspeed.s6ef5y.com/swf-ms-seed/swf-ms-angular-seed-deploy.git
-			'''
+			"""
 
 
   }}
