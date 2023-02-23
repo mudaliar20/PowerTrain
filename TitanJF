@@ -1,46 +1,49 @@
-def repoName
-def repoURL
+@Library("titan-library") _
 def branchName
 pipeline {
-  agent any
-  environment {
-        buildnumber = "${BUILD_NUMBER}"
-        jobName    = "${env.JOB_NAME}"
-        
-        
-    }
-  stages{
-     stage('Test') {
-	 steps{
+    agent any
+    
+    environment {
+    NEXUS_CREDENTIALS   = credentials('nexus_user')
+    buildnumber         = "${BUILD_NUMBER}"
+  }
+
+        stages{
+            
+           
+        stage('Update Image Tag to Deployment file') {
+             agent {
+                docker {
+					 image "${GLOBAL_NEXUS_SERVER_URL}/${GLOBAL_NEXUS_REPO_NAME}/redhat/ubi9/git:latest"
+                     args '-u root:root'
+                 }
+            }
+  steps {
+    withCredentials([usernamePassword(credentialsId: 'gitlab_developer', passwordVariable: 'repopass', usernameVariable: 'repouser')]) {
+ 
 	 script{
 	 repoName = determineRepoName()
          branchName = getGitBranchName() 
          repoURL = determineRepoURL()
 	 }
-        	     
-         sh "echo jobName=${env.JOB_NAME}"
-sh "echo buildNumber=${env.BUILD_NUMBER}"
-sh "echo repoName=$repoName"
-sh "echo branchName=$branchName"
-sh "echo repoURL=$repoURL"
+sh'''
+rm -rf swf-ms-angular-seed-deploy
+			git clone -b main https://${repouser}:${repopass}@gitlab.microspeed.s6ef5y.com/swf-ms-seed/swf-ms-angular-seed-deploy.git
+			cd swf-ms-angular-seed-deploy
+			ls
+	sed -i "s,tag: .*,tag: '''+ buildnumber +'''-$branchName,g" values.yaml
+	git config --global user.email "microspeed@example.com"
+   git commit -am "Updated Image version tag"
+   git push https://${repouser}:${repopass}@gitlab.microspeed.s6ef5y.com/swf-ms-seed/swf-ms-angular-seed-deploy.git
+			'''
 
-    }
-     }
-     
-    
+
+  }}
+        }
 }
-  
 
 }
 
-
-
-String determineRepoName() {
-    return scm.getUserRemoteConfigs()[0].getUrl().tokenize('/')[3].split("\\.")[0]
-}
-String determineRepoURL() {
-    return scm.getUserRemoteConfigs()[0].getUrl()
-}
 String getGitBranchName() {
     return scm.branches[0].name.tokenize("*")[0].split("\\/")[1]
 }
