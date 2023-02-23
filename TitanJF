@@ -24,6 +24,7 @@ pipeline {
 	 script{
          branchName = getGitBranchName() 
 	 }
+         sh "echo branchName=$branchName"
 sh'''
 echo "$branchName"
 echo $branchName
