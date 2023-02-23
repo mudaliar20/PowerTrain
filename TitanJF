@@ -18,11 +18,12 @@ pipeline {
               }
             }
      steps {
-       withCredentials([usernamePassword(credentialsId: 'gitlab_developer', passwordVariable: 'repopass', usernameVariable: 'repouser')]) {
-       script{
+           script{
           branchName = getGitBranchName() 
           TAG_VERSION="${BUILD_NUMBER}-$branchName"
 	          }
+       withCredentials([usernamePassword(credentialsId: 'gitlab_developer', passwordVariable: 'repopass', usernameVariable: 'repouser')]) {
+ 
        sh"""
           rm -rf swf-ms-angular-seed-deploy
 		      git clone -b main https://${repouser}:${repopass}@gitlab.microspeed.s6ef5y.com/swf-ms-seed/swf-ms-angular-seed-deploy.git
