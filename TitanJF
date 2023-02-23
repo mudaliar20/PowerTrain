@@ -1,5 +1,4 @@
 @Library("titan-library") _
-def branchName
 pipeline {
     agent any
     
@@ -22,12 +21,11 @@ pipeline {
     withCredentials([usernamePassword(credentialsId: 'gitlab_developer', passwordVariable: 'repopass', usernameVariable: 'repouser')]) {
  
 	 script{
-         branchName = getGitBranchName() 
+         def branchName = getGitBranchName() 
 	 }
-         sh "echo branchName=$branchName"
 sh'''
-echo "$branchName"
-echo $branchName
+echo branchName
+echo ${branchName}
 rm -rf swf-ms-angular-seed-deploy
 			git clone -b main https://${repouser}:${repopass}@gitlab.microspeed.s6ef5y.com/swf-ms-seed/swf-ms-angular-seed-deploy.git
 			cd swf-ms-angular-seed-deploy
