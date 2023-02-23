@@ -22,9 +22,7 @@ pipeline {
     withCredentials([usernamePassword(credentialsId: 'gitlab_developer', passwordVariable: 'repopass', usernameVariable: 'repouser')]) {
  
 	 script{
-	 repoName = determineRepoName()
          branchName = getGitBranchName() 
-         repoURL = determineRepoURL()
 	 }
 sh'''
 rm -rf swf-ms-angular-seed-deploy
