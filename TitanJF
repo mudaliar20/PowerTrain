@@ -1,0 +1,46 @@
+def repoName
+def repoURL
+def branchName
+pipeline {
+  agent any
+  environment {
+        buildnumber = "${BUILD_NUMBER}"
+        jobName    = "${env.JOB_NAME}"
+        
+        
+    }
+  stages{
+     stage('Test') {
+	 steps{
+	 script{
+	 repoName = determineRepoName()
+         branchName = getGitBranchName() 
+         repoURL = determineRepoURL()
+	 }
+        	     
+         sh "echo jobName=${env.JOB_NAME}"
+sh "echo buildNumber=${env.BUILD_NUMBER}"
+sh "echo repoName=$repoName"
+sh "echo branchName=$branchName"
+sh "echo repoURL=$repoURL"
+
+    }
+     }
+     
+    
+}
+  
+
+}
+
+
+
+String determineRepoName() {
+    return scm.getUserRemoteConfigs()[0].getUrl().tokenize('/')[3].split("\\.")[0]
+}
+String determineRepoURL() {
+    return scm.getUserRemoteConfigs()[0].getUrl()
+}
+String getGitBranchName() {
+    return scm.branches[0].name.tokenize("*")[0].split("\\/")[1]
+}
