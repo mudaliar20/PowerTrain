@@ -5,7 +5,6 @@ pipeline {
     environment {
     NEXUS_CREDENTIALS   = credentials('nexus_user')
     buildnumber         = "${BUILD_NUMBER}"
-    branchName          = ""
   }
 
         stages{
